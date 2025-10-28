@@ -93,31 +93,19 @@ export default function MCPPage() {
           </div>
 
           <div className="flex gap-1 sm:gap-2 shrink-0">
-            {/* 데스크탑: 텍스트 포함 */}
-            <Button variant="outline" size="sm" onClick={handleExport} className="hidden sm:flex">
-              <Download className="w-4 h-4 mr-2" />
-              내보내기
-            </Button>
-            <Button variant="outline" size="sm" asChild className="hidden sm:flex">
-              <label className="cursor-pointer">
-                <Upload className="w-4 h-4 mr-2" />
-                가져오기
-                <input
-                  type="file"
-                  accept="application/json"
-                  className="hidden"
-                  onChange={handleImport}
-                />
-              </label>
-            </Button>
-
-            {/* 모바일: 아이콘만 */}
-            <Button variant="outline" size="icon" onClick={handleExport} className="sm:hidden" title="내보내기">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={handleExport}
+              title="내보내기"
+            >
               <Download className="w-4 h-4" />
+              <span className="sr-only">내보내기</span>
             </Button>
-            <Button variant="outline" size="icon" asChild className="sm:hidden">
+            <Button variant="outline" size="icon" asChild>
               <label className="cursor-pointer flex items-center justify-center" title="가져오기">
                 <Upload className="w-4 h-4" />
+                <span className="sr-only">가져오기</span>
                 <input
                   type="file"
                   accept="application/json"
@@ -130,16 +118,13 @@ export default function MCPPage() {
             {/* 서버 추가 버튼 */}
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                {/* 데스크탑 */}
-                <Button size="sm" className="hidden sm:flex">
-                  <Plus className="w-4 h-4 mr-2" />
-                  서버 추가
-                </Button>
-              </DialogTrigger>
-              <DialogTrigger asChild>
-                {/* 모바일 */}
-                <Button size="icon" className="sm:hidden" title="서버 추가">
+                <Button 
+                  size="icon" 
+                  className="shrink-0"
+                  title="서버 추가"
+                >
                   <Plus className="w-4 h-4" />
+                  <span className="sr-only">서버 추가</span>
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto">
