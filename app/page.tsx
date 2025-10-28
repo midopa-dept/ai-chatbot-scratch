@@ -268,19 +268,28 @@ export default function ChatPage() {
                 </p>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1 sm:gap-2">
               <Dialog open={isMCPDialogOpen} onOpenChange={setIsMCPDialogOpen}>
                 <DialogTrigger asChild>
                   <Button
                     variant="ghost"
-                    size="sm"
-                    className="hidden md:flex"
+                    size="icon"
+                    className="relative"
+                    title="MCP Tools"
                   >
-                    <Wrench className="w-4 h-4 mr-2" />
-                    MCP Tools ({enabledMCPServers.size})
+                    <Wrench className="w-4 h-4" />
+                    {enabledMCPServers.size > 0 && (
+                      <Badge 
+                        variant="default" 
+                        className="absolute -top-1 -right-1 h-4 min-w-4 p-0 text-xs flex items-center justify-center"
+                      >
+                        {enabledMCPServers.size}
+                      </Badge>
+                    )}
+                    <span className="sr-only">MCP Tools ({enabledMCPServers.size})</span>
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-md">
+                <DialogContent className="max-w-[95vw] sm:max-w-md">
                   <DialogHeader>
                     <DialogTitle>MCP Tools 선택</DialogTitle>
                   </DialogHeader>
@@ -337,21 +346,12 @@ export default function ChatPage() {
               </Dialog>
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 onClick={() => (window.location.href = '/mcp')}
-                className="hidden md:flex"
+                title="MCP 관리"
               >
-                <Settings className="w-4 h-4 mr-2" />
-                MCP 관리
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={clearMessages}
-                disabled={messages.length === 0}
-                className="hidden md:flex"
-              >
-                내역 삭제
+                <Settings className="w-4 h-4" />
+                <span className="sr-only">MCP 관리</span>
               </Button>
             </div>
           </div>
