@@ -76,28 +76,29 @@ export default function MCPPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* 헤더 */}
-      <header className="border-b border-border bg-card px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+      <header className="border-b border-border bg-card px-4 sm:px-6 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
             <Link href="/">
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="shrink-0">
                 <ArrowLeft className="w-5 h-5" />
               </Button>
             </Link>
-            <div>
-              <h1 className="text-2xl font-bold">MCP 서버 관리</h1>
-              <p className="text-sm text-muted-foreground">
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-2xl font-bold truncate">MCP 서버 관리</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
                 Model Context Protocol 서버를 관리하고 테스트합니다
               </p>
             </div>
           </div>
 
-          <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={handleExport}>
+          <div className="flex gap-1 sm:gap-2 shrink-0">
+            {/* 데스크탑: 텍스트 포함 */}
+            <Button variant="outline" size="sm" onClick={handleExport} className="hidden sm:flex">
               <Download className="w-4 h-4 mr-2" />
               내보내기
             </Button>
-            <Button variant="outline" size="sm" asChild>
+            <Button variant="outline" size="sm" asChild className="hidden sm:flex">
               <label className="cursor-pointer">
                 <Upload className="w-4 h-4 mr-2" />
                 가져오기
@@ -109,14 +110,39 @@ export default function MCPPage() {
                 />
               </label>
             </Button>
+
+            {/* 모바일: 아이콘만 */}
+            <Button variant="outline" size="icon" onClick={handleExport} className="sm:hidden" title="내보내기">
+              <Download className="w-4 h-4" />
+            </Button>
+            <Button variant="outline" size="icon" asChild className="sm:hidden">
+              <label className="cursor-pointer flex items-center justify-center" title="가져오기">
+                <Upload className="w-4 h-4" />
+                <input
+                  type="file"
+                  accept="application/json"
+                  className="hidden"
+                  onChange={handleImport}
+                />
+              </label>
+            </Button>
+
+            {/* 서버 추가 버튼 */}
             <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
               <DialogTrigger asChild>
-                <Button size="sm">
+                {/* 데스크탑 */}
+                <Button size="sm" className="hidden sm:flex">
                   <Plus className="w-4 h-4 mr-2" />
                   서버 추가
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+              <DialogTrigger asChild>
+                {/* 모바일 */}
+                <Button size="icon" className="sm:hidden" title="서버 추가">
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>MCP 서버 추가</DialogTitle>
                 </DialogHeader>
@@ -130,11 +156,11 @@ export default function MCPPage() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
           {/* 서버 목록 */}
           <div className="lg:col-span-1 space-y-4">
-            <h2 className="text-lg font-semibold">서버 목록</h2>
+            <h2 className="text-base sm:text-lg font-semibold">서버 목록</h2>
             {servers.length === 0 ? (
               <Card className="p-6 text-center text-muted-foreground">
                 <p>등록된 서버가 없습니다.</p>
