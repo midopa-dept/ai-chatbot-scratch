@@ -48,6 +48,14 @@ class MCPClientManager {
     try {
       switch (config.transport) {
         case 'stdio':
+          // Vercel 같은 서버리스 환경에서는 STDIO transport 불가
+          if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+            throw new Error(
+              'STDIO transport is not supported in serverless environments. ' +
+              'Please use HTTP or SSE transport, or deploy your MCP server separately.'
+            );
+          }
+          
           if (!config.command) {
             throw new Error('STDIO transport requires command');
           }
